@@ -58,7 +58,7 @@ class ConnectFourEnv(object):
 		return self._game_board
 
 	def display_board(self):
-		return np.flip(self._game_board)
+		return np.flip(self._game_board,0)
 
 	def winning_positions(self, token):
 		#check for winning horizontal tokens
@@ -91,7 +91,7 @@ class ConnectFourEnv(object):
 		self._game_board = board
 
 	def check_valid_action(self, action):
-		assert action > 0 and action < self._num_cols,'invalid action!'
+		assert action >= 0 and action < self._num_cols,'invalid action!'
 
 
 	def step(self, action, token):

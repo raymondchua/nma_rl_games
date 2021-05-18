@@ -6,5 +6,6 @@ class RandomAgent(object):
         self.board = board
 
     def take_action(self):
-        col = random.choice(range(1,self.board._num_cols))
+        col = random.choice(range(self.board._num_cols))
         return col
+
