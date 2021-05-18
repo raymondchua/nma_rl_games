@@ -18,6 +18,8 @@ def main():
 	
 	env.reset()
 
+	print(env.display_board())
+
 	print('done')
 
 

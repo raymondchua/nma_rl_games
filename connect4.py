@@ -58,7 +58,7 @@ class ConnectFourEnv(object):
 		return self._game_board
 
 	def display_board(self):
-		print(np.flip(self.game_board))
+		print(np.flip(self._game_board))
 
 	def winning_positions(self, token):
 		#check for winning horizontal tokens
@@ -87,13 +87,7 @@ class ConnectFourEnv(object):
 
 		return False
 
-
-	@property
-	def _game_board(self):
-		return self._game_board
-	
-	@_game_board.setter
-	def _game_board(self, board):
+	def set_game_board(self, board):
 		self._game_board = board
 
 
