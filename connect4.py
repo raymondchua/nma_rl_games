@@ -121,35 +121,6 @@ class ConnectFourEnv(object):
 
 		return self._game_board, reward, done, {}
 
-		# try:
-			# self.check_valid_action(action)
-
-			# #get corresponding col
-			# col = self._game_board[:, action] 
-
-
-			# #check for next available row 
-			# row = self.find_avail_row(col)
-
-			# self._game_board[row, action] = token
-
-			# # game ends when all spaces are filled
-			# if self._step_count == self._max_steps:
-			# 	done = True
-
-			# #check for winning positions
-			# if self.winning_positions(token):
-			# 	reward = 1
-			# 	done = True
-
-			# return self._game_board, reward, done, {}
-
-		# except Exception as error:
-		# 	print('Caught this error: ' + repr(error))
-
-		
-
-
 
 
 
