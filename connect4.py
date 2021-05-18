@@ -90,7 +90,7 @@ class ConnectFourEnv(object):
 
 	@property
 	def game_board(self):
-		return self._gameboard
+		return self._game_board
 	
 	@game_board.setter
 	def game_board(self, board):
