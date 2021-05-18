@@ -49,7 +49,7 @@ class ConnectFourEnv(object):
 
 	def find_avail_row(self, col):
 		for i in range(self._num_rows):
-			if self._game_board[i, col] == 0:
+			if col[i] == 0:
 				return i
 
 	def reset(self):
@@ -58,62 +58,96 @@ class ConnectFourEnv(object):
 		return self._game_board
 
 	def display_board(self):
-		print(np.flip(self._game_board))
+		return np.flip(self._game_board)
 
 	def winning_positions(self, token):
 		#check for winning horizontal tokens
 		for r in range(self._num_rows):
-			for c in range(self.n_um_cols-3):
+			for c in range(self._num_cols-3):
 				if self._game_board[r,c] == token and self._game_board[r,c+1] == token and self._game_board[r,c+2] == token and self._game_board[r, c+3] == token:
 					return True
 
 		#check for winning vertical tokens
-		for r in range(self.num_rows-3):
-			for c in range(self.num_cols):
+		for r in range(self._num_rows-3):
+			for c in range(self._num_cols):
 				if self._game_board[r,c] == token and self._game_board[r+1,c] == token and self._game_board[r+2,c] == token and self._game_board[r+3, c] == token:
 					return True
 
 		#check for diagonal with positive gradient (ie. /)
-		for r in range(3,self.num_rows):
-			for c in range(self.num_cols-3):
+		for r in range(3,self._num_rows):
+			for c in range(self._num_cols-3):
 				if self._game_board[r,c] == token and self._game_board[r-1, c+1] == token and self._game_board[r-2, c+2] == token and self._game_board[r-3, c+3] == token:
 					return True
 
 		#check for diagonal with negative gradient (ie. \)
-		for r in range(self.num_rows-3):
-			for c in range(self.num_cols-3):
+		for r in range(self._num_rows-3):
+			for c in range(self._num_cols-3):
 				if self._game_board[r,c] == token and self._game_board[r+1, c+1] == token and self._game_board[r+2, c+2] == token and self._game_board[r+3, c+3] == token:
 					return True
 
 		return False
 
-	def set_game_board(self, board):
+	def load_game_board(self, board):
 		self._game_board = board
+
+	def check_valid_action(self, action):
+		assert action > 0 and action < self._num_cols,'invalid action!'
 
 
 	def step(self, action, token):
 		reward = 0
 		done = False
-		self.step_count += 1
+		self._step_count += 1
+
+		self.check_valid_action(action)
 
 		#get corresponding col
 		col = self._game_board[:, action] 
 
-		#check for next available row 
-		row = find_avail_row(col)
 
-		self._game_board[row, col] = token
+		#check for next available row 
+		row = self.find_avail_row(col)
+
+		self._game_board[row, action] = token
 
 		# game ends when all spaces are filled
 		if self._step_count == self._max_steps:
 			done = True
 
 		#check for winning positions
-		if winning_positions(token):
+		if self.winning_positions(token):
 			reward = 1
 			done = True
 
 		return self._game_board, reward, done, {}
+
+		# try:
+			# self.check_valid_action(action)
+
+			# #get corresponding col
+			# col = self._game_board[:, action] 
+
+
+			# #check for next available row 
+			# row = self.find_avail_row(col)
+
+			# self._game_board[row, action] = token
+
+			# # game ends when all spaces are filled
+			# if self._step_count == self._max_steps:
+			# 	done = True
+
+			# #check for winning positions
+			# if self.winning_positions(token):
+			# 	reward = 1
+			# 	done = True
+
+			# return self._game_board, reward, done, {}
+
+		# except Exception as error:
+		# 	print('Caught this error: ' + repr(error))
+
+		
 
 
 

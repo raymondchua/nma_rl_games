@@ -20,8 +20,21 @@ def main():
 
 	print(env.display_board())
 
-	print('done')
+	temp_board = np.zeros((6,7))
+	temp_board[0,5] = 1
+	temp_board[1,5] = 1
+	temp_board[2,5] = 1
 
+
+
+	env.load_game_board(temp_board)
+
+	print(env.display_board())
+
+	next_state, reward, done, _  = env.step(5,2)
+
+	print(reward)
+	print(env.display_board())
 
 
 
