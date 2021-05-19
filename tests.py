@@ -9,7 +9,6 @@ class test_environment():
         self.env = env
         self.agent = agent
 
-
     def test_find_avail_row(self, action):
         col = self.env._game_board[:, action]
 
@@ -20,7 +19,7 @@ class test_environment():
         print('available row after taking the actions:', self.env.find_avail_row(col))
 
     def test_rest(self):
-        for i in range(20):
+        for i in range(3):
             action = self.agent.take_action()
             token = random.randint(1,2)
             self.env.step(action, token)
@@ -84,7 +83,8 @@ class test_environment():
             if done:
                 break
 
-
+    def test_visualize_board(self):
+        self.env.visualize_board()
 
 if __name__ == "__main__":
     env = ConnectFourEnv()
@@ -101,3 +101,6 @@ if __name__ == "__main__":
 
     print( '\n #### Test reset() ####\n')
     tse.test_rest()
+
+    print( '\n #### Test visualize_board() ####\n')
+    tse.test_visualize_board()

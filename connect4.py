@@ -4,6 +4,11 @@ import numpy as np
 
 from enum import IntEnum
 
+import matplotlib.pyplot as plt
+from matplotlib.table import Table
+import pandas as pd
+from IPython.display import Image
+
 
 class ConnectFourEnv(object):
 
@@ -58,7 +63,7 @@ class ConnectFourEnv(object):
 		return self._game_board
 
 	def display_board(self):
-		return np.flip(self._game_board,0)
+		return np.flip(self._game_board, 0)
 
 	def winning_positions(self, token):
 		#check for winning horizontal tokens
@@ -107,7 +112,7 @@ class ConnectFourEnv(object):
 
 		#check for next available row 
 		row = self.find_avail_row(col)
-
+		print(row, action)
 		self._game_board[row, action] = token
 
 		# game ends when all spaces are filled
@@ -122,6 +127,22 @@ class ConnectFourEnv(object):
 		return self._game_board, reward, done, {}
 
 
+	def visualize_board(self, fmt='{:d}', bkg_colors=['yellow', 'pink']):
+		data = pd.DataFrame(self.display_board())
+		fig, ax = plt.subplots(figsize=[7,7])
+		ax.set_axis_off()
+		tb = Table(ax, bbox=[0,0,1,1])
+		nrows, ncols = data.shape
+		width, height = 1.0 / ncols, 1.0 / nrows
 
+		for (i,j), val in np.ndenumerate(data):
+			idx = [j % 2, (j + 1) % 2][i % 2]
+			color = bkg_colors[idx]
+			tb.add_cell(i, j, width, height, text=fmt.format(int(val)),
+					loc='center', facecolor=color)
 
+		tb.set_fontsize(24)
+		ax.add_table(tb)
+		fig.savefig('connect4_final_state.png')
 
+		return fig
