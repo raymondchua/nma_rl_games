@@ -112,7 +112,6 @@ class ConnectFourEnv(object):
 
 		#check for next available row 
 		row = self.find_avail_row(col)
-		print(row, action)
 		self._game_board[row, action] = token
 
 		# game ends when all spaces are filled
