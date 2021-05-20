@@ -23,8 +23,10 @@ class test_environment():
             action = self.agent.take_action()
             token = random.randint(1,2)
             self.env.step(action, token)
+        print("board before reset:")
         print(self.env.display_board())
         self.env.reset()
+        print("board after reset:")
         print(self.env.display_board())
 
     def test_winning_positions(self, token):
@@ -76,15 +78,16 @@ class test_environment():
         for i in range(5):
             action = self.agent.take_action()
             token = random.randint(1,2)
-            print('board after taking action=', action)
+            print('board after taking action {} by player {}:' .format(action, token))
+            _,_,done,_ = self.env.step(action, token)
             print(self.env.display_board())
 
-            _,_,done,_ = self.env.step(action, token)
             if done:
                 break
 
     def test_visualize_board(self):
         self.env.visualize_board()
+        print('figure of the board is saved!')
 
 if __name__ == "__main__":
     env = ConnectFourEnv()
